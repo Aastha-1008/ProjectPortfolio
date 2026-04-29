@@ -46,7 +46,7 @@ export function SiteHeader() {
                   href={item.href}
                   className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                     active
-                      ? "bg-white text-black"
+                      ? "bg-white !text-black shadow-lg"
                       : "text-slate-200 hover:bg-white/10 hover:text-white"
                   }`}
                 >
