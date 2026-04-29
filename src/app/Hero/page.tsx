@@ -9,7 +9,7 @@ import { FaXTwitter } from "react-icons/fa6";
 
 export default function Hero() {
     return (
-        <section className="relative min-h-screen lg:h-[80vh] overflow-hidden bg-[#020617]">
+        <section className="relative min-h-screen lg:h-[80vh] overflow-hidden bg-[#020617] justify-items-center flex">
 
             {/* BACKGROUND */}
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/20 via-black to-black -z-20" />
@@ -75,8 +75,7 @@ export default function Hero() {
             ))}
 
             {/* GRID */}
-            <div className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-3 auto-rows-max lg:auto-rows-max gap-4 lg:h-full">
-
+            <div className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-3 items-center gap-8 ">
                 {/* LEFT */}
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
