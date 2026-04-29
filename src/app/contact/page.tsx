@@ -2,8 +2,13 @@
 
 import { useState } from "react";
 import { Mail, Phone, MapPin, Check } from "lucide-react";
+import emailjs from "@emailjs/browser";
+
 
 export default function ContactPage() {
+
+  const [loading, setLoading] = useState(false);
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -16,9 +21,42 @@ export default function ContactPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: any) => {
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(form);
+    setLoading(true);
+
+    try {
+      await emailjs.send(
+        "service_vcj5uzc",
+        "template_7gpwz8q",
+        {
+          name: form.name,
+          email: form.email,
+          service: form.service,
+          subject: form.subject,
+          message: form.message,
+        },
+        "uqIiLRwM16sTjI368"
+      );
+
+      alert("Message sent successfully!");
+
+      // Reset form
+      setForm({
+        name: "",
+        email: "",
+        service: "",
+        subject: "",
+        message: "",
+      });
+
+      setLoading(false);
+
+    } catch (error) {
+      console.error(error);
+      alert("Failed to send message");
+    }
   };
 
   return (
@@ -76,10 +114,9 @@ export default function ContactPage() {
               className="input resize-none"
             />
 
-            <button className="w-full rounded-full bg-cyan-400 text-black py-3 font-semibold hover:scale-105 transition shadow-[0_0_25px_rgba(34,211,238,0.5)]">
-              Send Message
+            <button disabled={loading} className="w-full rounded-full bg-cyan-400 text-black py-3 font-semibold hover:scale-105 transition shadow-[0_0_25px_rgba(34,211,238,0.5)]">
+                {loading ? "Sending..." : "Send Message"}
             </button>
-
           </form>
         </div>
 
@@ -131,15 +168,22 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="flex gap-3">
+
+            {/* EMAIL (NEW) */}
+            <div className="flex gap-3 sm:col-span-2">
               <div className="icon-circle">
-                <Phone size={18} />
+                <Mail size={18} />
               </div>
               <div>
-                <p className="text-white font-semibold">Connect With Me</p>
-                <p className="text-slate-400 text-sm">
-                  +91 9634805020
-                </p>
+                <p className="text-white font-semibold">Email Me</p>
+
+                {/* CLICKABLE EMAIL */}
+                <a
+                  href="mailto:aastha.webfreelance@gmail.com"
+                  className="text-slate-400 text-sm hover:text-cyan-400 transition"
+                >
+                  aastha.webfreelance@gmail.com
+                </a>
               </div>
             </div>
 
