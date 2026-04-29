@@ -65,7 +65,7 @@ export default function ServicesPage() {
 
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-18 lg:px-10 mt-12">
+      <section className="mx-auto max-w-7xl px-6  lg:px-10 mt-12">
         <TestimonialCarousel />
       </section>
 

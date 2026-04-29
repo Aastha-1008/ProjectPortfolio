@@ -1,93 +1,52 @@
 "use client";
+
 import { useState } from "react";
 import Image from "next/image";
 import { featuredProjects } from "@/lib/data";
-import { CheckCircle, Layout, Zap } from "lucide-react";
 
 export default function ProjectsPage() {
   const [modalIndex, setModalIndex] = useState<number | null>(null);
 
-  const getTechColor = (tech: string) => {
-    const t = tech.toLowerCase();
-
-    if (["react", "next", "javascript", "typescript", "html", "css"].some(k => t.includes(k))) {
-      return "bg-blue-50 text-blue-700 border-blue-200";
-    }
-
-    if (["node", "express", "spring", "java"].some(k => t.includes(k))) {
-      return "bg-green-50 text-green-700 border-green-200";
-    }
-
-    if (["mongodb", "mysql", "postgres", "firebase"].some(k => t.includes(k))) {
-      return "bg-purple-50 text-purple-700 border-purple-200";
-    }
-
-    if (["figma", "design", "ui", "ux"].some(k => t.includes(k))) {
-      return "bg-pink-50 text-pink-700 border-pink-200";
-    }
-
-    return "bg-orange-50 text-orange-700 border-orange-200";
-  };
-
   return (
-    <main className="mx-auto max-w-6xl px-6 py-16">
+    <main className="px-6 py-16 bg-[#0b1220] min-h-screen">
 
-      {/* HEADER */}
-      <section className="mb-12 flex flex-col gap-4">
-        <p className="section-kicker">Projects</p>
-          <h1 className="page-title">Production-ready work, not side experiments.</h1>
-          <p className="page-copy max-w-2xl">
-            Highlights actual live work from coffee brands, elder care, leadership events, and industry campaigns so visitors can see the breadth of your design and development output.
-          </p>
+      {/* ================= HEADER ================= */}
+      <section className="mb-16 max-w-5xl">
+        <p className="text-sm text-cyan-400 uppercase tracking-widest mb-3">
+          Projects
+        </p>
+
+        <h1 className="text-4xl md:text-6xl font-semibold text-white leading-tight">
+          Production-ready work, not side experiments.
+        </h1>
+
+        <p className="text-slate-400 mt-6 max-w-2xl">
+          Highlights actual live work from coffee brands, elder care, leadership
+          events, and industry campaigns so visitors can see the breadth of your
+          design and development output.
+        </p>
       </section>
 
-      {/* GRID */}
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {/* ================= GRID ================= */}
+      <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
         {featuredProjects.map((project, idx) => (
-          <button
+          <ProjectCard
             key={project.title}
+            project={project}
             onClick={() => setModalIndex(idx)}
-            className="group rounded-[28px] overflow-hidden border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-cyan-200/70"
-          >
-            {/* IMAGE */}
-            <div className="relative h-52 w-full overflow-hidden">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-
-              {/* CATEGORY */}
-              <span className="absolute bottom-3 left-3 rounded-full bg-black/40 px-3 py-1 text-xs text-white backdrop-blur">
-                {project.category}
-              </span>
-            </div>
-
-            {/* CONTENT */}
-            <div className="p-5 text-left">
-              <h2 className="text-lg font-semibold text-slate-900 group-hover:text-cyan-600 transition">
-                {project.title}
-              </h2>
-              <p className="mt-2 text-sm text-slate-600 line-clamp-2">
-                {project.outcome}
-              </p>
-            </div>
-          </button>
+          />
         ))}
       </div>
 
-      {/* MODAL */}
+      {/* ================= MODAL ================= */}
       {modalIndex !== null && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur p-4">
+          <div className="relative w-full max-w-3xl rounded-[28px] bg-[#020617] border border-white/10 overflow-hidden">
 
-          <div className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-[32px] bg-white shadow-2xl">
-
-            {/* CLOSE BUTTON */}
+            {/* CLOSE */}
             <button
               onClick={() => setModalIndex(null)}
-              className="absolute top-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-md shadow-lg transition hover:scale-105 hover:bg-black"
+              className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black"
             >
               ✕
             </button>
@@ -98,84 +57,78 @@ export default function ProjectsPage() {
                 src={featuredProjects[modalIndex].image}
                 alt={featuredProjects[modalIndex].title}
                 fill
-                className="object-cover rounded-t-[32px]"
+                className="object-cover"
               />
             </div>
 
             {/* CONTENT */}
-            <div className="p-8">
-              <span className="inline-block rounded-full bg-cyan-50 px-3 py-1 text-xs font-semibold text-cyan-700 mb-3">
-                {featuredProjects[modalIndex].category}
-              </span>
+            <div className="p-6">
+              <h2 className="text-white text-2xl font-semibold">
+                {featuredProjects[modalIndex].title}
+              </h2>
 
-              <div className="mb-6">
+              <p className="text-slate-400 mt-3">
+                {featuredProjects[modalIndex].outcome}
+              </p>
 
-                {/* TITLE */}
-                <h2 className="font-display text-2xl lg:text-3xl font-semibold text-slate-950 tracking-tight">
-                  {featuredProjects[modalIndex].title}
-                </h2>
-
-                {/* DIVIDER */}
-                <div className="mt-3 h-[2px] w-12 bg-cyan-400 rounded-full" />
-
-                {/* DESCRIPTION */}
-                <p className="mt-4 text-[15px] leading-7 text-slate-600 max-w-2xl">
-                  {featuredProjects[modalIndex].outcome}
-                </p>
-
-              </div>
-
-              {/* STACK */}
-              <div className="flex flex-wrap gap-2 mb-4">
-                {featuredProjects[modalIndex].stack.split(",").map((tech) => (
-                  <span
-                    key={tech}
-                    className={`rounded-full px-3 py-1 text-xs font-medium border transition hover:scale-105 ${getTechColor(tech)}`}
-                  >
-                    {tech.trim()}
-                  </span>
-                ))}
-              </div>
-
-              {/* HIGHLIGHTS */}
-              <div className="grid gap-3 mb-2 sm:grid-cols-2">
-                {featuredProjects[modalIndex].highlights.map((h, i) => {
-                  const icons = [
-                    <Layout className="h-4 w-4" />,
-                    <Zap className="h-4 w-4" />,
-                    <CheckCircle className="h-4 w-4" />,
-                  ];
-
-                  return (
-                    <div
-                      key={h}
-                      className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm transition hover:border-cyan-200 hover:shadow-md"
-                    >
-                      {/* ICON */}
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-50 text-cyan-600">
-                        {icons[i % icons.length]}
-                      </div>
-
-                      {/* TEXT */}
-                      <p className="leading-6">{h}</p>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* CTA */}
               <a
                 href={featuredProjects[modalIndex].url}
                 target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+                className="inline-block mt-5 px-5 py-2 rounded-full bg-cyan-400 text-black font-semibold"
               >
-                Visit Live Site →
+                Visit Live →
               </a>
             </div>
           </div>
         </div>
       )}
     </main>
+  );
+}
+
+/* ================= CARD COMPONENT ================= */
+
+function ProjectCard({ project, onClick }: any) {
+  return (
+    <div
+      onClick={onClick}
+      className="group relative h-[260px] cursor-pointer"
+    >
+      {/* CARD */}
+      <div className="relative h-full w-full rounded-[20px] overflow-hidden border border-white/10 bg-[#020617]">
+
+        {/* IMAGE */}
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          className="object-cover transition duration-700 group-hover:scale-110"
+        />
+
+        {/* OVERLAY */}
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+
+        {/* TEXT */}
+        <div className="absolute bottom-5 left-5 right-20 z-10">
+          <h3 className="text-white text-lg font-semibold">
+            {project.title}
+          </h3>
+          <p className="text-slate-300 text-xs mt-1">
+            Designing the Beauty Behind the Data.
+          </p>
+        </div>
+
+        {/* ================= CORNER NOTCH ================= */}
+
+        {/* CUT (same as page bg) */}
+        <div className="absolute bottom-0 right-0 w-[70px] h-[70px] bg-[#0b1220] rounded-tl-[30px] z-20" />
+
+        {/* BUTTON */}
+        <div className="absolute bottom-3 right-3 w-10 h-10 rounded-full bg-cyan-400 flex items-center justify-center text-black text-sm shadow-lg z-30 group-hover:scale-110 transition">
+          →
+        </div>
+      </div>
+    </div>
   );
 }

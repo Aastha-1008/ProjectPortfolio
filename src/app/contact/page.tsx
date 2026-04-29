@@ -1,154 +1,188 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Check } from "lucide-react";
 
 export default function ContactPage() {
   const [form, setForm] = useState({
     name: "",
     email: "",
+    service: "",
+    subject: "",
     message: "",
   });
 
-  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+  const handleChange = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(form);
-    alert("Message sent!");
   };
 
   return (
-    <main className="page-shell">
-      
-      {/* HERO */}
-      <section className="page-hero">
-        <p className="section-kicker">Contact</p>
-        <h1 className="page-title">
-          Let’s build something impactful together
-        </h1>
-        <p className="page-copy max-w-2xl">
-          Whether you need a modern website, dashboard, or product interface — 
-          I’m available for freelance projects and collaborations.
-        </p>
-      </section>
+    <section className="relative w-screen left-1/2 -ml-[50vw] py-20 overflow-hidden">
 
-      {/* MAIN GRID */}
-      <section className="grid gap-10 lg:grid-cols-2 mt-14">
-        
-        {/* LEFT: CONTACT CARDS */}
-        <div className="grid gap-5">
-          
-          {/* EMAIL */}
-          <a
-            href="mailto:aastha.chaudhary237@gmail.com"
-            className="group flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md transition hover:bg-white/10 hover:-translate-y-1"
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-300">
-              <Mail className="h-5 w-5" />
-            </div>
+      {/* BACKGROUND */}
+      <div className="absolute inset-0 bg-gradient-to-br from-green-900/20 via-black to-black -z-10" />
+      <div className="absolute right-[20%] top-[40%] w-[400px] h-[400px] bg-green-400/10 blur-[140px] rounded-full" />
 
-            <div>
-              <p className="text-xs tracking-[0.2em] text-slate-400 uppercase">Email</p>
-              <h2 className="text-base font-semibold text-white">
-                aastha.chaudhary237@gmail.com
-              </h2>
-              <p className="text-sm text-slate-400 mt-1">
-                Best for project discussions and collaboration.
-              </p>
-            </div>
-          </a>
+      <div className="grid lg:grid-cols-2 gap-10 px-6 lg:px-20 items-center">
 
-          {/* PHONE */}
-          <a
-            href="tel:+919634805020"
-            className="group flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md transition hover:bg-white/10 hover:-translate-y-1"
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-500/10 text-green-300">
-              <Phone className="h-5 w-5" />
-            </div>
+        {/* LEFT — FORM */}
+        <div className="bg-black/60 border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
 
-            <div>
-              <p className="text-xs tracking-[0.2em] text-slate-400 uppercase">Phone</p>
-              <h2 className="text-base font-semibold text-white">
-                +91 9634805020
-              </h2>
-              <p className="text-sm text-slate-400 mt-1">
-                Quick calls for scope or pricing discussion.
-              </p>
-            </div>
-          </a>
-
-          {/* LOCATION */}
-          <div className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500/10 text-purple-300">
-              <MapPin className="h-5 w-5" />
-            </div>
-
-            <div>
-              <p className="text-xs tracking-[0.2em] text-slate-400 uppercase">Location</p>
-              <h2 className="text-base font-semibold text-white">
-                Ghaziabad, India
-              </h2>
-              <p className="text-sm text-slate-400 mt-1">
-                Available for remote work worldwide.
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-        {/* RIGHT: FORM */}
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
-          
-          <h2 className="text-xl font-semibold text-white mb-6">
-            Send a message
+          <h2 className="text-3xl font-semibold text-white mb-6">
+            Connect With <span className="text-yellow-400">Us.</span>
           </h2>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              value={form.name}
-              onChange={handleChange}
-              required
-              className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400"
-            />
+          <form onSubmit={handleSubmit} className="space-y-4">
+
+            <div className="grid grid-cols-2 gap-4">
+              <input
+                name="name"
+                placeholder="Full Name"
+                onChange={handleChange}
+                className="input"
+              />
+              <input
+                name="email"
+                placeholder="Email Address"
+                onChange={handleChange}
+                className="input"
+              />
+            </div>
+
+            <select name="service" onChange={handleChange} className="input">
+              <option>Select Service</option>
+              <option>Web Development</option>
+              <option>UI/UX Design</option>
+              <option>SEO</option>
+            </select>
 
             <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              value={form.email}
+              name="subject"
+              placeholder="Subject"
               onChange={handleChange}
-              required
-              className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400"
+              className="input"
             />
 
             <textarea
               name="message"
-              placeholder="Tell me about your project..."
-              rows={5}
-              value={form.message}
+              placeholder="Write Your Message"
+              rows={4}
               onChange={handleChange}
-              required
-              className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400"
+              className="input resize-none"
             />
 
-            <button
-              type="submit"
-              className="mt-4 w-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3 text-sm font-semibold text-slate-950 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_10px_30px_rgba(34,211,238,0.4)]"
-            >
-              Send Message →
+            <button className="w-full rounded-full bg-cyan-400 text-black py-3 font-semibold hover:scale-105 transition shadow-[0_0_25px_rgba(34,211,238,0.5)]">
+              Send Message
             </button>
+
           </form>
         </div>
 
-      </section>
-    </main>
+        {/* RIGHT — CONTENT */}
+        <div className="space-y-6">
+
+          <div>
+            <p className="text-sm text-yellow-400 uppercase tracking-widest">
+              Contact Us
+            </p>
+
+            <h2 className="text-4xl font-semibold text-white leading-tight mt-2">
+              Get In Touch <br />
+              <span className="text-yellow-400">With Me.</span>
+            </h2>
+
+            <p className="text-slate-400 mt-4 max-w-md">
+              Have a project or question? Feel free to reach out anytime.
+            </p>
+          </div>
+
+          {/* BENEFITS */}
+          <div className="space-y-3">
+            {[
+              "Smart IT Planning for Better Results",
+              "Deep Evaluation of Your Needs",
+              "Expert Solutions for Every Challenge",
+              "24/7 Support & Maintenance",
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-3 text-slate-300">
+                <Check className="text-cyan-400" size={18} />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* CONTACT INFO */}
+          <div className="grid grid-cols-2 gap-6 pt-6">
+
+            <div className="flex gap-3">
+              <div className="icon-circle">
+                <MapPin size={18} />
+              </div>
+              <div>
+                <p className="text-white font-semibold">Our Address</p>
+                <p className="text-slate-400 text-sm">
+                  Ghaziabad, India
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <div className="icon-circle">
+                <Phone size={18} />
+              </div>
+              <div>
+                <p className="text-white font-semibold">Connect With Me</p>
+                <p className="text-slate-400 text-sm">
+                  +91 9634805020
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      {/* REUSABLE STYLES */}
+      <style jsx>{`
+        .input {
+          width: 100%;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 999px;
+          padding: 12px 16px;
+          color: white;
+          font-size: 14px;
+          outline: none;
+          transition: 0.3s;
+        }
+
+        .input:focus {
+          border-color: #84cc16;
+          box-shadow: 0 0 0 1px #84cc16;
+        }
+
+        textarea.input {
+          border-radius: 16px;
+        }
+
+        .icon-circle {
+          width: 40px;
+          height: 40px;
+          background: #22d3ee;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: black;
+          box-shadow: 0 0 20px rgba(34,211,238,0.5);
+  }
+      `}</style>
+    </section>
   );
 }

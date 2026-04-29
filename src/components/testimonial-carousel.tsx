@@ -1,77 +1,111 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { testimonials } from "@/lib/data";
 
 export function TestimonialCarousel() {
-  const totalPages = Math.ceil(testimonials.length / 2);
-  const [pageIndex, setPageIndex] = useState(0);
-  const visibleReviews = [
-    testimonials[pageIndex * 2],
-    testimonials[(pageIndex * 2 + 1) % testimonials.length],
-  ];
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setPageIndex((current) => (current + 1) % totalPages);
-    }, 6000);
-    return () => window.clearInterval(timer);
-  }, [totalPages]);
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const review = testimonials[index];
 
   return (
-    <div className="panel panel-dark overflow-hidden rounded-[28px] p-8">
-      <div className="mb-8 max-w-3xl">
-        <p className="section-kicker text-cyan-300">Client Feedback</p>
-        <h2 className="mt-3 text-3xl font-semibold text-white">What clients say about working together</h2>
-        <p className="mt-4 text-sm leading-7 text-slate-300">
-          Highlights the quality, clarity, and speed behind the sites and event platforms I build.
-        </p>
-      </div>
+    <section className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] min-h-[70vh] flex items-center overflow-hidden">
+      {/* BACKGROUND */}
+      <div className="absolute inset-0 -z-10" />
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        {visibleReviews.map((review, idx) => (
-          <article key={`${review.name}-${idx}`} className="rounded-[24px] border border-slate-700/30 bg-slate-950/90 p-8 shadow-[0_18px_50px_rgba(15,23,42,0.18)]">
-            <p className="text-base leading-8 text-slate-200">“{review.quote}”</p>
-            <div className="mt-5">
-              <p className="text-sm font-semibold text-white">{review.name}</p>
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">{review.role}</p>
-            </div>
-          </article>
-        ))}
-      </div>
+      {/* GLOW */}
+      <div className="absolute left-[20%] top-[40%] w-[500px] h-[500px] bg-green-400/10 blur-[150px] rounded-full" />
 
-      <div className="mt-8 flex flex-col gap-4 border-t border-slate-700/40 pt-6 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex gap-2">
-          {Array.from({ length: totalPages }).map((_, idx) => (
-            <button
-              key={`page-${idx}`}
-              type="button"
-              onClick={() => setPageIndex(idx)}
-              className={`h-2.5 w-8 rounded-full transition ${idx === pageIndex ? "bg-cyan-300" : "bg-slate-600 hover:bg-slate-500"}`}
-              aria-label={`Show page ${idx + 1}`}
+      {/* FULL WIDTH CONTAINER */}
+      <div className="w-full px-6 lg:px-20 grid lg:grid-cols-3 gap-10 items-center">
+
+        {/* LEFT IMAGE */}
+        <div className="relative">
+          <div className="rounded-[28px] overflow-hidden border border-white/10 bg-black">
+            <Image
+              src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d"
+              alt="client"
+              width={500}
+              height={600}
+              className="object-cover w-full h-[420px] hover:scale-105 transition duration-700"
             />
-          ))}
+          </div>
+
+          {/* BADGE */}
+          <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2 text-xs text-slate-300">
+            10+ Happy Clients
+          </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => setPageIndex((pageIndex - 1 + totalPages) % totalPages)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 bg-slate-900 text-slate-200 transition hover:bg-slate-800"
-            aria-label="Previous testimonials"
-          >
-            <span aria-hidden="true">‹</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setPageIndex((pageIndex + 1) % totalPages)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 bg-slate-900 text-slate-200 transition hover:bg-slate-800"
-            aria-label="Next testimonials"
-          >
-            <span aria-hidden="true">›</span>
-          </button>
+        {/* CENTER CONTENT */}
+        <div className="space-y-6 text-center lg:text-left">
+
+          <p className="text-sm text-green-400 uppercase tracking-widest">
+            Client Review
+          </p>
+
+          <h2 className="text-4xl lg:text-5xl font-semibold text-white leading-tight">
+            Trusted by clients <br />
+            <span className="text-yellow-400">worldwide.</span>
+          </h2>
+
+          <p className="text-slate-400 text-sm max-w-md mx-auto lg:mx-0">
+            Real stories and heartfelt feedback from clients who trusted my work to deliver results.
+          </p>
+
+          {/* STARS */}
+          <div className="flex justify-center lg:justify-start gap-1 text-yellow-400 text-xl">
+            ★★★★★
+          </div>
+
+          {/* REVIEW CARD */}
+          <div className="bg-black/60 border border-white/10 rounded-2xl p-6 backdrop-blur-md max-w-md mx-auto lg:mx-0">
+            <p className="text-slate-200 leading-7 text-sm">
+              “{review.quote}”
+            </p>
+
+            <div className="mt-4 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-green-400 flex items-center justify-center text-black font-bold">
+                {review.name[0]}
+              </div>
+              <div>
+                <p className="text-white text-sm font-semibold">{review.name}</p>
+                <p className="text-xs text-slate-400">{review.role}</p>
+              </div>
+            </div>
+          </div>
         </div>
+
+        {/* RIGHT IMAGE */}
+        <div className="relative">
+          <div className="rounded-[28px] overflow-hidden border border-white/10 bg-black">
+            <Image
+              src="https://images.unsplash.com/photo-1556761175-b413da4baf72"
+              alt="client"
+              width={500}
+              height={600}
+              className="object-cover w-full h-[420px] hover:scale-105 transition duration-700"
+            />
+          </div>
+
+          {/* GOOGLE BADGE */}
+          <div className="absolute bottom-4 left-4 bg-black/70 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2 flex items-center gap-2">
+            <span className="text-green-400 text-lg font-bold">G</span>
+            <div>
+              <p className="text-xs text-slate-400">5 ★ Ratings</p>
+            </div>
+          </div>
+        </div>
+
       </div>
-    </div>
+    </section>
   );
 }

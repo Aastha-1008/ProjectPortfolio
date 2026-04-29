@@ -49,7 +49,7 @@ export function FreelanceSpotlight() {
       <div className="freelance-header-new">
         <div className="freelance-header-new__content">
           <p className="section-kicker">Freelance Focus</p>
-          <h2 className="mt-3 font-display text-3xl tracking-[-0.05em] text-white">
+          <h2 className="mt-3 font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-[-0.05em] text-white px-4 sm:px-0">
             Hand-crafted digital experiences.
           </h2>
         </div>
