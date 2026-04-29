@@ -9,7 +9,7 @@ import { FaXTwitter } from "react-icons/fa6";
 
 export default function Hero() {
     return (
-        <section className="relative min-h-screen lg:h-[80vh] overflow-hidden bg-[#020617] justify-items-center flex">
+        <section className="relative min-h-screen lg:h-[80vh] overflow-hidden bg-[#020617] justify-items-center flex z-99">
 
             {/* BACKGROUND */}
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/20 via-black to-black -z-20" />

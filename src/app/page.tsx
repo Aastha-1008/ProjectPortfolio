@@ -29,18 +29,32 @@ export default function Home() {
         <Hero />
 
         {/* ================= METRICS ================= */}
-        <section className="mx-auto max-w-6xl px-6  grid grid-cols-2 md:grid-cols-3 gap-6">
-          {metrics.map((item) => (
+        <section className="mx-auto max-w-6xl px-6 grid grid-cols-2 md:grid-cols-3 gap-6 mt-16 lg:mt-0">
+
+          {metrics.map((item, index) => (
             <motion.div
               key={item.label}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-md hover:-translate-y-1 transition"
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+
+              className={`
+        rounded-2xl border border-white/10 bg-white/5 p-6 text-center 
+        backdrop-blur-md transition hover:-translate-y-1
+
+        ${index === 2 ? "col-span-2 md:col-span-1" : ""}
+      `}
             >
-              <p className="text-4xl font-bold text-cyan-400">{item.value}</p>
-              <p className="text-sm text-slate-400 mt-2">{item.label}</p>
+              <p className="text-4xl font-bold text-cyan-400">
+                {item.value}
+              </p>
+
+              <p className="text-sm text-slate-400 mt-2 leading-relaxed">
+                {item.label}
+              </p>
             </motion.div>
           ))}
+
         </section>
 
         {/* ================= MARQUEE ================= */}
